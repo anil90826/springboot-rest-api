@@ -1,13 +1,13 @@
 package com.anilgubbala.controller;
 
+import com.anilgubbala.domain.Post;
 import com.anilgubbala.payload.PostDto;
 import com.anilgubbala.service.PostService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -17,6 +17,16 @@ public class PostsController {
 
     public PostsController(PostService postService) {
         this.postService = postService;
+    }
+
+    @GetMapping("/all-posts")
+    public List<PostDto> getAllPosts() {
+        return postService.getAllPosts();
+    }
+
+    @GetMapping("/post/{post-id}")
+    public ResponseEntity<PostDto> getPostById(@PathVariable("post-id") Long postId) {
+        return ResponseEntity.ok(postService.getPostById(postId));
     }
 
     /**
